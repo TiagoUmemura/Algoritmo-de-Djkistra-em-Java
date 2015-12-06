@@ -57,7 +57,7 @@ public class CaminhoMinimo {
         System.out.println("Adj: " + t);
         */
         Dijkstra dijkstra = new Dijkstra();
-        dijkstra.doDijkstra(grafo, listVertAdd, "3");
+        dijkstra.doDijkstra(grafo, listVertAdd, "5");
     }
     
 }

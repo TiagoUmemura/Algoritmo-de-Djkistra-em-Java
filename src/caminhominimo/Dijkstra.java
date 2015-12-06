@@ -45,7 +45,7 @@ public class Dijkstra {
                 Vertice v = vertAdj2.get(i);
                 vertAdj.add(v.getId());
             }//////
-            //for each neighbor v of u:     where v is still in Q.
+            //para cada vizinho v de u. V nao sai da lista
             for(int i = 0; i < vertAdj.size(); i++){
                 double alt;
                 double distUV;//de u até v
@@ -56,7 +56,7 @@ public class Dijkstra {
                 }
                 
                 alt = u.getDist() + distUV;
-                if(alt < v.getDist()){
+                if(alt < v.getDist()){//caminho mais curto encontrado
                    grafo.getVertice(v.getId()).setDist(alt);
                    grafo.getVertice(v.getId()).setPrev(u.getId());
                 }
@@ -64,6 +64,14 @@ public class Dijkstra {
             count++;
             System.out.println("Count: " + count);
         }
-        System.out.println("Dist: " + grafo.getVertice("309").getDist());    
+        
+        System.out.println("");
+        //printar caminho
+        String target = "15";//definir o vertice alvo
+        System.out.println("Vertice alvo: " + target);
+        while(!target.equals(source)){
+            System.out.println("Prev: " + grafo.getVertice(target).getPrev());
+            target = grafo.getVertice(target).getPrev();
+        }
     }
 }
