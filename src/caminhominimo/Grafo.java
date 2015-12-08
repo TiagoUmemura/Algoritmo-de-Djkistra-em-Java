@@ -28,7 +28,7 @@ public interface Grafo<V extends Vertice, A extends Aresta<V,V>> {
      * O vértice ficará sem nenhum outro vértice adjacente.
      * @param verticeAdicionado Vértice sendo adicionado ao grafo
      */
-    public void adicionaVertice(V verticeAdicionado);
+    public void adicionaVertice(V verticeAdicionado, String id);
 	
     /**
      * Adiciona uma aresta ao grafo. Se algum dos vértices

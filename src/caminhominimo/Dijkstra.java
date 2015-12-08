@@ -67,11 +67,16 @@ public class Dijkstra {
         
         System.out.println("");
         //printar caminho
-        String target = "15";//definir o vertice alvo
+        String target = "2";//definir o vertice alvo
         System.out.println("Vertice alvo: " + target);
-        while(!target.equals(source)){
+        if(grafo.getVertice(target).getPrev() != null){
+            while(!target.equals(source)){
             System.out.println("Prev: " + grafo.getVertice(target).getPrev());
             target = grafo.getVertice(target).getPrev();
+            }
+        }else{
+            System.out.println("Não estão conectados");
         }
+        System.out.println("Dist: " + grafo.getVertice("2").getDist());
     }
 }

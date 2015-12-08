@@ -13,8 +13,8 @@ import java.util.HashMap;
  * @author Documentois
  */
 public class GrafoListaAdjacencia implements Grafo<Vertice,Aresta<Vertice,Vertice>> {
-     HashMap<Vertice,ArrayList<Vertice>> grafo = new HashMap<Vertice,ArrayList<Vertice>>();
-    
+    HashMap<Vertice,ArrayList<Vertice>> grafo = new HashMap<Vertice,ArrayList<Vertice>>();
+    HashMap<String, Vertice> grafo2 = new HashMap<String, Vertice>();
     @Override
     public ArrayList<Vertice> getVerticesAdjacentes(Vertice u) {//funcionando
         if(u != null && this.grafo.containsKey(u))
@@ -70,32 +70,10 @@ public class GrafoListaAdjacencia implements Grafo<Vertice,Aresta<Vertice,Vertic
 
     @Override
     public Vertice getVertice(String id) { //funcionando
-       ArrayList<Vertice> keys = new ArrayList<Vertice>();
-        ArrayList<Vertice> listVertices = null;
-        try{
-            keys.addAll(grafo.keySet());
-
-            /** Procurando o vertice nas chaves **/
-            for(int i=0;i<keys.size();i++){
-                if(keys.get(i).getId().equals(id))
-                    return keys.get(i);
-            }
-
-            listVertices = new ArrayList<Vertice>();
-
-            for(int i=0;i<keys.size();i++){
-                listVertices.addAll(grafo.get(keys.get(i)));
-                for(int j=0;j<listVertices.size();j++){
-                    if(listVertices.get(j).getId().equals(id))
-                        return listVertices.get(j);
-                }
-                listVertices.clear();
-            }
-            return null;
-        }finally{
-            keys = null;
-            listVertices = null;
+        if(this.grafo2.containsKey(id)){
+            return grafo2.get(id);
         }
+        return null;
     }
 
     @Override
@@ -110,11 +88,14 @@ public class GrafoListaAdjacencia implements Grafo<Vertice,Aresta<Vertice,Vertic
     * Cria uma chave para o vertice que leva a um arraylist de vertice adjacentes
     */
     @Override
-    public void adicionaVertice(Vertice verticeAdicionado) {//funcionando
-       if(!grafo.containsKey(verticeAdicionado))
+    public void adicionaVertice(Vertice verticeAdicionado, String id) {//funcionando
+        if(!grafo.containsKey(verticeAdicionado)){
             this.grafo.put(verticeAdicionado, new ArrayList<Vertice>());
-        else
+            this.grafo2.put(id, verticeAdicionado);//add hash de string para o vertice de id da string
+        }
+        else{
             System.out.println("Vertice ja existente");
+        }
     }
 
     @Override

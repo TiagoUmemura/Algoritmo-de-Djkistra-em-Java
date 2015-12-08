@@ -26,18 +26,18 @@ public class CaminhoMinimo {
         GrafoListaAdjacencia grafo = new GrafoListaAdjacencia();
         arqString = arq.TxtToString();
         System.out.println("Tamanho:" + arqString.size());
-        
-        for(int i = 4; i < 500; i++){//adicionar todos os vertices, lista para controle do que ja foi add  arqString.size()
+        //4
+        for(int i = 4; i < 100000; i++){//adicionar todos os vertices, lista para controle do que ja foi add  arqString.size()
             String[] split = arqString.get(i).split("\t"); //pegar a string na posição e dar split por tab
             if(!listVertAdd.contains(split[0])){
                 Vertice v = new Vertice(split[0]);
                 listVertAdd.add(split[0]);
-                grafo.adicionaVertice(v);
+                grafo.adicionaVertice(v, split[0]);
             }
             if(!listVertAdd.contains(split[1])){
                 Vertice v1 = new Vertice(split[1]);
                 listVertAdd.add(split[1]);
-                grafo.adicionaVertice(v1);
+                grafo.adicionaVertice(v1, split[1]);
             }
             Vertice v2 = grafo.getVertice(split[0]);//vertice da colun 1
             v2.setDist(99999999);//dist infinita
@@ -57,7 +57,7 @@ public class CaminhoMinimo {
         System.out.println("Adj: " + t);
         */
         Dijkstra dijkstra = new Dijkstra();
-        dijkstra.doDijkstra(grafo, listVertAdd, "5");
+        dijkstra.doDijkstra(grafo, listVertAdd, "4052");
     }
     
 }
