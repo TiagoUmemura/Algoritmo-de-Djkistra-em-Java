@@ -6,6 +6,7 @@
 package caminhominimo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -21,29 +22,40 @@ public class Dijkstra {
     *lista com tdos os vertices add
     *String com id do vertice fonte
     */
-    public GrafoListaAdjacencia doDijkstra(GrafoListaAdjacencia grafo, List<String> listVertAdd, String source){
+    public GrafoListaAdjacencia doDijkstra(GrafoListaAdjacencia grafo, String source){
         grafo.getVertice(source).setDist(0);//seta distancia do source para zero
+        HashMap<String, String> listaVerticeHash = new HashMap<String, String>();
         List<String> listaVertice = new ArrayList<String>();//lista com todos os vertices
         List<Vertice> listaVertice2 = new ArrayList<Vertice>();
+        List<String> listaVerticeVisitados = new ArrayList<String>();//vertices cinzas na teoria
+        HashMap<String, String> listaVerticeVisitadosHash = new HashMap<String, String>();
         double distVert = 999999999;
         int count = 0;//numero de iterações
         
         listaVertice2 = grafo.getVertices();
         for(int i = 0; i < listaVertice2.size(); i++){//preencher lista com todos os vertices
             listaVertice.add(listaVertice2.get(i).getId());
+            listaVerticeHash.put(listaVertice2.get(i).getId(), listaVertice2.get(i).getId());
         }
-        
-        while(!listaVertice.isEmpty()){//lista Q
+        System.out.println("Quant de v: " + listaVertice.size());
+        listaVerticeVisitados.add(source);//lista de vertices visitados
+        listaVerticeVisitadosHash.put(source, source);
+                
+        while(!listaVerticeVisitados.isEmpty()){//lista Q
             distVert = 999999999;
             String verticeMenor = "";//menor dist
-            for(int i = 0; i < listaVertice.size(); i++){//pegar o vertice com a menor dist
-                Vertice u = grafo.getVertice(listaVertice.get(i));
+            for(int i = 0; i < listaVerticeVisitados.size(); i++){//pegar o vertice com a menor dist
+                Vertice u = grafo.getVertice(listaVerticeVisitados.get(i));
                 if(u.getDist() < distVert){//menor vertice dist
                     distVert = u.getDist();
-                    verticeMenor = listaVertice.get(i);
+                    verticeMenor = listaVerticeVisitados.get(i);
+                    //System.out.println("vertmo: " + verticeMenor);
                 }
             }
-            listaVertice.remove(verticeMenor);//remove o vertice de distMenor, já foi visitado
+            listaVertice.remove(verticeMenor);//remove o vertice de distMenor,
+            listaVerticeVisitados.remove(verticeMenor);//remove
+            listaVerticeHash.remove(verticeMenor);//remove
+            listaVerticeVisitadosHash.remove(verticeMenor);
             List<String> vertAdj = new ArrayList<String>();
             List<Vertice> vertAdj2 = new ArrayList<Vertice>();
             Vertice u = grafo.getVertice(verticeMenor);//vertice u, da vez
@@ -51,6 +63,10 @@ public class Dijkstra {
             for(int i = 0; i < vertAdj2.size(); i++){//salvar em lista de string usando o id
                 Vertice v = vertAdj2.get(i);
                 vertAdj.add(v.getId());
+                if(!listaVerticeVisitadosHash.containsKey(v.getId()) && listaVerticeHash.containsKey(v.getId())){
+                    listaVerticeVisitados.add(v.getId());
+                    listaVerticeVisitadosHash.put(v.getId(), v.getId());
+                }
             }//////
             //para cada vizinho v de u. V nao sai da lista
             for(int i = 0; i < vertAdj.size(); i++){
