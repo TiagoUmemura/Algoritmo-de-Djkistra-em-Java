@@ -22,7 +22,8 @@ public class Dijkstra {
     *lista com tdos os vertices add
     *String com id do vertice fonte
     */
-    public GrafoListaAdjacencia doDijkstra(GrafoListaAdjacencia grafo, String source){
+    public GrafoListaAdjacencia doDijkstra(GrafoListaAdjacencia grafo, String source, HashMap<String, Double> arestaHash){
+        
         grafo.getVertice(source).setDist(0);//seta distancia do source para zero
         HashMap<String, String> listaVerticeHash = new HashMap<String, String>();
         List<String> listaVertice = new ArrayList<String>();//lista com todos os vertices
@@ -73,7 +74,9 @@ public class Dijkstra {
                 double alt;
                 double distUV;//de u até v
                 Vertice v = grafo.getVertice(vertAdj.get(i));
-                distUV = Double.parseDouble(v.getId()) - Double.parseDouble(u.getId()); //aresta id de v - id de u
+                String arestachave = "";
+                arestachave = v.getId() + u.getId();
+                distUV = arestaHash.get(arestachave); //aresta id de v - id de u
                 if(distUV < 0){
                     distUV = Math.abs(distUV);
                 }

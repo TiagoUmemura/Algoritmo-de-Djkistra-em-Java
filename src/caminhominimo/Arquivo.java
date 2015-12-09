@@ -24,7 +24,7 @@ public class Arquivo {
     
     public List TxtToString() throws FileNotFoundException{
         List<String> arquivo = new ArrayList<String>();
-        File arquivotxt = new File("roadNet-PA.txt");//arquivo txt para ler LDGraph20_20certoHDGraph100_25
+        File arquivotxt = new File("base.txt");//arquivo txt para ler LDGraph20_20certoHDGraph100_25
         InputStream in = new FileInputStream(arquivotxt);
         Scanner scan = new Scanner(in);
         
