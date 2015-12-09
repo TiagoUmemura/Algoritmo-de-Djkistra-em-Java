@@ -32,13 +32,13 @@ public class GrafoListaAdjacencia implements Grafo<Vertice,Aresta<Vertice,Vertic
         ArrayList<Vertice> listVertices = new ArrayList<Vertice>();
         try{
             keys.addAll(grafo.keySet());
-
-            for(int i=0;i<keys.size();i++)
+            return keys;
+            /*for(int i=0;i<keys.size();i++)
             listVertices.addAll(grafo.get(keys.get(i)));
 
             listVertices.addAll(keys);
 
-            return listVertices;
+            return listVertices;*/
         }finally{
             keys = null;
             listVertices = null;
@@ -89,12 +89,12 @@ public class GrafoListaAdjacencia implements Grafo<Vertice,Aresta<Vertice,Vertic
     */
     @Override
     public void adicionaVertice(Vertice verticeAdicionado, String id) {//funcionando
-        if(!grafo.containsKey(verticeAdicionado)){
+        if(!grafo2.containsKey(id)){
             this.grafo.put(verticeAdicionado, new ArrayList<Vertice>());
             this.grafo2.put(id, verticeAdicionado);//add hash de string para o vertice de id da string
         }
         else{
-            System.out.println("Vertice ja existente");
+            //System.out.println("Vertice ja existente");
         }
     }
 

@@ -21,22 +21,29 @@ public class Dijkstra {
     *lista com tdos os vertices add
     *String com id do vertice fonte
     */
-    public void doDijkstra(GrafoListaAdjacencia grafo, List<String> listVertAdd, String source){
+    public GrafoListaAdjacencia doDijkstra(GrafoListaAdjacencia grafo, List<String> listVertAdd, String source){
         grafo.getVertice(source).setDist(0);//seta distancia do source para zero
-        //System.out.println("dist source " + grafo.getVertice(source).getDist());
+        List<String> listaVertice = new ArrayList<String>();//lista com todos os vertices
+        List<Vertice> listaVertice2 = new ArrayList<Vertice>();
         double distVert = 999999999;
         int count = 0;//numero de iterações
-        while(!listVertAdd.isEmpty()){//lista Q
+        
+        listaVertice2 = grafo.getVertices();
+        for(int i = 0; i < listaVertice2.size(); i++){//preencher lista com todos os vertices
+            listaVertice.add(listaVertice2.get(i).getId());
+        }
+        
+        while(!listaVertice.isEmpty()){//lista Q
             distVert = 999999999;
             String verticeMenor = "";//menor dist
-            for(int i = 0; i < listVertAdd.size(); i++){//pegar o vertice com a menor dist
-                Vertice u = grafo.getVertice(listVertAdd.get(i));
-                if(u.getDist() < distVert){
+            for(int i = 0; i < listaVertice.size(); i++){//pegar o vertice com a menor dist
+                Vertice u = grafo.getVertice(listaVertice.get(i));
+                if(u.getDist() < distVert){//menor vertice dist
                     distVert = u.getDist();
-                    verticeMenor = listVertAdd.get(i);
+                    verticeMenor = listaVertice.get(i);
                 }
             }
-            listVertAdd.remove(verticeMenor);//remove o vertice de distMenor, já foi visitado
+            listaVertice.remove(verticeMenor);//remove o vertice de distMenor, já foi visitado
             List<String> vertAdj = new ArrayList<String>();
             List<Vertice> vertAdj2 = new ArrayList<Vertice>();
             Vertice u = grafo.getVertice(verticeMenor);//vertice u, da vez
@@ -62,21 +69,13 @@ public class Dijkstra {
                 }
             }
             count++;
-            System.out.println("Count: " + count);
+            if(count%1000 == 0){
+                System.out.println("Count: " + count);
+            }
         }
         
         System.out.println("");
-        //printar caminho
-        String target = "2";//definir o vertice alvo
-        System.out.println("Vertice alvo: " + target);
-        if(grafo.getVertice(target).getPrev() != null){
-            while(!target.equals(source)){
-            System.out.println("Prev: " + grafo.getVertice(target).getPrev());
-            target = grafo.getVertice(target).getPrev();
-            }
-        }else{
-            System.out.println("Não estão conectados");
-        }
-        System.out.println("Dist: " + grafo.getVertice("2").getDist());
+        
+        return grafo;
     }
 }

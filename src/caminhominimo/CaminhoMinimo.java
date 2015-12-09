@@ -29,35 +29,40 @@ public class CaminhoMinimo {
         //4
         for(int i = 4; i < 100000; i++){//adicionar todos os vertices, lista para controle do que ja foi add  arqString.size()
             String[] split = arqString.get(i).split("\t"); //pegar a string na posição e dar split por tab
-            if(!listVertAdd.contains(split[0])){
+            //if(!listVertAdd.contains(split[0])){
                 Vertice v = new Vertice(split[0]);
-                listVertAdd.add(split[0]);
+                //listVertAdd.add(split[0]);
                 grafo.adicionaVertice(v, split[0]);
-            }
-            if(!listVertAdd.contains(split[1])){
+            //}
+            //if(!listVertAdd.contains(split[1])){
                 Vertice v1 = new Vertice(split[1]);
-                listVertAdd.add(split[1]);
+                //listVertAdd.add(split[1]);
                 grafo.adicionaVertice(v1, split[1]);
-            }
+            //}
             Vertice v2 = grafo.getVertice(split[0]);//vertice da colun 1
             v2.setDist(99999999);//dist infinita
             Vertice v3 = grafo.getVertice(split[1]);//vertice da colun 2
             v3.setDist(99999999);//distancia infinita
             grafo.adicionaVertice(v2, v3);//add adj
+            if(i %1000 == 0){
+                System.out.println("i: " + i);
+            }
         }
-
-        System.out.println("Quant de v: " + listVertAdd.size());
-        /*List<Vertice> vertAdj = new ArrayList<Vertice>();
-        Vertice v = grafo.getVertice("1");
-        vertAdj = grafo.getVerticesAdjacentes(v);
-        String t = "";
-        for(int i = 0; i < vertAdj.size(); i++){
-            t += vertAdj.get(i).getId() + " ";
-        }
-        System.out.println("Adj: " + t);
-        */
+        String source = "5";
         Dijkstra dijkstra = new Dijkstra();
-        dijkstra.doDijkstra(grafo, listVertAdd, "4052");
+        GrafoListaAdjacencia grafoMin = dijkstra.doDijkstra(grafo, listVertAdd, source);
+        
+        String target = "15";//definir o vertice alvo
+        System.out.println("Vertice alvo: " + target);
+        if(grafoMin.getVertice(target).getPrev() != null){
+            while(!target.equals(source)){
+            System.out.println("Prev: " + grafoMin.getVertice(target).getPrev());
+            target = grafoMin.getVertice(target).getPrev();
+            }
+        }else{
+            System.out.println("");
+        }
+        System.out.println("Dist: " + grafoMin.getVertice("15").getDist());
     }
     
 }
